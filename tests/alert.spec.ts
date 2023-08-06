@@ -65,3 +65,18 @@ test('Click Alert and Input Prompt', async({ page }) => {
   const resultText = await page.locator('#demo').textContent();
   expect(resultText).toContain('Hello Ayo! How are you today?');
 });
+
+test('Click Alert and Cancel the Prompt', async({ page }) => {
+  await page.goto('/');
+  await page.waitForLoadState('domcontentloaded');
+
+  page.on('dialog', async(dialog) => {
+    expect(dialog.type()).toContain('prompt');
+    expect(dialog.message()).toContain('Please enter your name:');
+    await dialog.dismiss();
+  });
+
+  await page.getByRole('button', { name: 'Prompt' }).click();
+  const resultText = await page.locator('#demo').textContent();
+  expect(resultText).toContain('User cancelled the prompt.');
+});
