@@ -50,3 +50,18 @@ test('Click Alert and Click Cancel', async({ page }) => {
   expect(resultText).toContain('You pressed Cancel!');
   await page.close();
 });
+
+test('Click Alert and Input Prompt', async({ page }) => {
+  await page.goto('/');
+  await page.waitForLoadState('domcontentloaded');
+
+  page.on('dialog', async(dialog) => {
+    expect(dialog.type()).toContain('prompt');
+    expect(dialog.message()).toContain('Please enter your name:');
+    await dialog.accept('Ayo');
+  });
+
+  await page.getByRole('button', { name: 'Prompt' }).click();
+  const resultText = await page.locator('#demo').textContent();
+  expect(resultText).toContain('Hello Ayo! How are you today?');
+});
