@@ -6,6 +6,7 @@ test('Check Number of Options', async({ page }) => {
 
   await expect(page.locator('#country option')).toHaveCount(10);
   await expect(page.locator('#country option')).not.toHaveCount(11);
+  await page.close();
 });
 
 test('Select Japan and Check', async({ page }) => {
@@ -16,4 +17,5 @@ test('Select Japan and Check', async({ page }) => {
 
   await expect(page.locator('#country')).toHaveValue('japan');
   await expect(page.locator('#country')).not.toHaveValue('germany');
+  await page.close();
 });

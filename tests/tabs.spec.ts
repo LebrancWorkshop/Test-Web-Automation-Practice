@@ -42,6 +42,6 @@ test('Type on wiki search and click the result to the new page', async({ context
 
   const wikipedia = (await newPage.title()).split(' - ')[1];
 
-  await expect(wikipedia).toBe('Wikipedia');
+  expect(wikipedia).toBe('Wikipedia');
   await page.close();
 });
