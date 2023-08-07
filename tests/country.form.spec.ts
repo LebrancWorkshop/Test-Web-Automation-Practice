@@ -13,5 +13,7 @@ test('Select Japan and Check', async({ page }) => {
   await page.waitForLoadState('domcontentloaded');
 
   await page.locator('#country').selectOption('Japan');
+
   await expect(page.locator('#country')).toHaveValue('japan');
+  await expect(page.locator('#country')).not.toHaveValue('germany');
 });
